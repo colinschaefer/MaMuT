@@ -413,6 +413,7 @@ public class MamutActions {
 
 		private static final long serialVersionUID = 1L;
 		private final MaMuT mamut;
+		@SuppressWarnings("unused")
 		private final MamutViewer viewer;
 
 		public ToggleZDimDialog(final MaMuT mamut, final MamutViewer viewer) {
@@ -440,10 +441,10 @@ public class MamutActions {
 
 		@Override
 		public void actionPerformed(final ActionEvent arg0) {
+			@SuppressWarnings("unused")
 			MamutVolumeRenderer render = new MamutVolumeRenderer(
 					mamut.getSpimData(), viewer.getViewerPanel(),
 					mamut.getZdimDialog(), mamut.getSetupAssignments(), viewer);
-
 		}
 	}
 
