@@ -158,6 +158,7 @@ public class MamutKeyboardHandler {
 		map.put("step time backward", MamutActions
 				.getStepWiseTimeBrowsingAction(mamut, viewer, false));
 
+		map.put("maxproj", MamutActions.getStartMaxProj(mamut, viewer));
 		map.put("toggle zdim dialog",
 				MamutActions.getToggleZdimDialog(mamut, viewer));
 

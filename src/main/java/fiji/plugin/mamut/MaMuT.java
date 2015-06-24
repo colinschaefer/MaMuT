@@ -53,7 +53,9 @@ import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import mpicbg.spim.data.SpimData;
 import mpicbg.spim.data.SpimDataException;
+import mpicbg.spim.data.XmlIoSpimData;
 import mpicbg.spim.data.generic.sequence.AbstractSequenceDescription;
 import mpicbg.spim.data.sequence.TimePoint;
 import net.imglib2.RealPoint;
@@ -64,9 +66,7 @@ import org.jgrapht.graph.DefaultWeightedEdge;
 import bdv.BigDataViewer;
 import bdv.ViewerImgLoader;
 import bdv.img.cache.Cache;
-import bdv.spimdata.SpimDataMinimal;
 import bdv.spimdata.WrapBasicImgLoader;
-import bdv.spimdata.XmlIoSpimDataMinimal;
 import bdv.tools.HelpDialog;
 import bdv.tools.InitializeViewerState;
 import bdv.tools.brightness.BrightnessDialog;
@@ -224,6 +224,8 @@ public class MaMuT implements ModelChangeListener {
 	private ManualTransformationEditor manualTransformationEditor;
 
 	private static File mamutFile;
+
+	private SpimData spimData;
 
 	public MaMuT(final File imageFile, final Model model,
 			final SourceSettings settings) {
@@ -556,8 +558,7 @@ public class MaMuT implements ModelChangeListener {
 	 *            the file that points to the xml master file of the image data.
 	 */
 	private void prepareSources(final File dataFile) throws SpimDataException {
-		final SpimDataMinimal spimData = new XmlIoSpimDataMinimal()
-				.load(dataFile.getAbsolutePath());
+		spimData = new XmlIoSpimData().load(dataFile.getAbsolutePath());
 		if (WrapBasicImgLoader.wrapImgLoaderIfNecessary(spimData)) {
 			System.err
 					.println("WARNING:\nOpening <SpimData> dataset that is not suited for suited for interactive browsing.\nConsider resaving as HDF5 for better performance.");
@@ -1272,6 +1273,14 @@ public class MaMuT implements ModelChangeListener {
 	 */
 	public MamutGUI getGUI() {
 		return gui;
+	}
+
+	public SpimData getSpimData() {
+		return (SpimData) spimData;
+	}
+
+	public ZdimDialog getZdimDialog() {
+		return zdimDialog;
 	}
 
 	/**

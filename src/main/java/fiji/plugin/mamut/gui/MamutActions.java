@@ -8,6 +8,7 @@ import javax.swing.Action;
 import bdv.tools.HelpDialog;
 import fiji.plugin.mamut.MaMuT;
 import fiji.plugin.mamut.viewer.MamutViewer;
+import fiji.plugin.mamut.viewer.MamutVolumeRenderer;
 import fiji.plugin.trackmate.Logger;
 
 public class MamutActions {
@@ -90,6 +91,11 @@ public class MamutActions {
 	public static final Action getToggleZdimDialog(final MaMuT mamut,
 			final MamutViewer viewer) {
 		return new ToggleZDimDialog(mamut, viewer);
+	}
+
+	public static final Action getStartMaxProj(final MaMuT mamut,
+			final MamutViewer viewer) {
+		return new StartMaxProj(mamut, viewer);
 	}
 
 	/*
@@ -417,6 +423,26 @@ public class MamutActions {
 		@Override
 		public void actionPerformed(final ActionEvent arg0) {
 			mamut.toggleZdimDialog();
+
+		}
+	}
+
+	private static final class StartMaxProj extends AbstractAction {
+
+		private static final long serialVersionUID = 1L;
+		private final MaMuT mamut;
+		private final MamutViewer viewer;
+
+		public StartMaxProj(final MaMuT mamut, final MamutViewer viewer) {
+			this.mamut = mamut;
+			this.viewer = viewer;
+		}
+
+		@Override
+		public void actionPerformed(final ActionEvent arg0) {
+			MamutVolumeRenderer render = new MamutVolumeRenderer(
+					mamut.getSpimData(), viewer.getViewerPanel(),
+					mamut.getZdimDialog(), mamut.getSetupAssignments(), viewer);
 
 		}
 	}
