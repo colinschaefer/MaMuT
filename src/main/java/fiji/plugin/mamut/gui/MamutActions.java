@@ -1,24 +1,32 @@
 package fiji.plugin.mamut.gui;
 
-import bdv.tools.HelpDialog;
-import fiji.plugin.mamut.MaMuT;
-import fiji.plugin.mamut.viewer.MamutViewer;
-import fiji.plugin.trackmate.Logger;
-
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 
+import bdv.tools.HelpDialog;
+import fiji.plugin.mamut.MaMuT;
+import fiji.plugin.mamut.viewer.MamutViewer;
+import fiji.plugin.trackmate.Logger;
+
 public class MamutActions {
 
-	private MamutActions() {}
+	public static final Action getStartMaxproj(final MaMuT mamut,
+			final MamutViewer viewer) {
+		return new startMaxproj(mamut, viewer);
+	};
 
-	public static final Action getAddSpotAction(final MaMuT mamut, final MamutViewer viewer) {
+	private MamutActions() {
+	}
+
+	public static final Action getAddSpotAction(final MaMuT mamut,
+			final MamutViewer viewer) {
 		return new AddSpotAction(mamut, viewer);
 	}
 
-	public static final Action getDeleteSpotAction(final MaMuT mamut, final MamutViewer viewer) {
+	public static final Action getDeleteSpotAction(final MaMuT mamut,
+			final MamutViewer viewer) {
 		return new DeleteSpotAction(mamut, viewer);
 	}
 
@@ -26,64 +34,70 @@ public class MamutActions {
 		return new SemiAutoTrackingAction(mamut);
 	}
 
-	public static final Action getShowHelpAction( final MamutViewer viewer ){
-		return new ShowHelpAction( viewer );
+	public static final Action getShowHelpAction(final MamutViewer viewer) {
+		return new ShowHelpAction(viewer);
 	}
 
-	public static final Action getStepWiseTimeBrowsingAction( final MaMuT mamut, final MamutViewer viewer, final boolean forward )
-	{
-		return new StepWiseTimeBrowsingAction( mamut, viewer, forward );
+	public static final Action getStepWiseTimeBrowsingAction(final MaMuT mamut,
+			final MamutViewer viewer, final boolean forward) {
+		return new StepWiseTimeBrowsingAction(mamut, viewer, forward);
 	}
 
 	public static final Action getToggleBrightnessDialogAction(final MaMuT mamut) {
 		return new ToggleBrightnessDialogAction(mamut);
 	}
 
-	public static final Action getToggleManualTransformAction( final MaMuT mamut, final MamutViewer viewer )
-	{
-		return new ToggleManualTransformAction( mamut, viewer );
+	public static final Action getToggleManualTransformAction(
+			final MaMuT mamut, final MamutViewer viewer) {
+		return new ToggleManualTransformAction(mamut, viewer);
 	}
 
-	public static final Action getIncreaseRadiusAction(final MaMuT mamut, final MamutViewer viewer) {
+	public static final Action getIncreaseRadiusAction(final MaMuT mamut,
+			final MamutViewer viewer) {
 		return new IncreaseRadiusAction(mamut, viewer);
 	}
 
-	public static final Action getIncreaseRadiusALotAction(final MaMuT mamut, final MamutViewer viewer) {
+	public static final Action getIncreaseRadiusALotAction(final MaMuT mamut,
+			final MamutViewer viewer) {
 		return new IncreaseRadiusALotAction(mamut, viewer);
 	}
 
-	public static final Action getIncreaseRadiusABitAction(final MaMuT mamut, final MamutViewer viewer) {
+	public static final Action getIncreaseRadiusABitAction(final MaMuT mamut,
+			final MamutViewer viewer) {
 		return new IncreaseRadiusABitAction(mamut, viewer);
 	}
 
-	public static final Action getDecreaseRadiusAction(final MaMuT mamut, final MamutViewer viewer) {
+	public static final Action getDecreaseRadiusAction(final MaMuT mamut,
+			final MamutViewer viewer) {
 		return new DecreaseRadiusAction(mamut, viewer);
 	}
 
-	public static final Action getDecreaseRadiusALotAction(final MaMuT mamut, final MamutViewer viewer) {
+	public static final Action getDecreaseRadiusALotAction(final MaMuT mamut,
+			final MamutViewer viewer) {
 		return new DecreaseRadiusALotAction(mamut, viewer);
 	}
 
-	public static final Action getDecreaseRadiusABitAction(final MaMuT mamut, final MamutViewer viewer) {
+	public static final Action getDecreaseRadiusABitAction(final MaMuT mamut,
+			final MamutViewer viewer) {
 		return new DecreaseRadiusABitAction(mamut, viewer);
 	}
 
-	public static final Action getToggleLinkingModeAction(final MaMuT mamut, final Logger logger) {
+	public static final Action getToggleLinkingModeAction(final MaMuT mamut,
+			final Logger logger) {
 		return new ToggleLinkingModeAction(mamut, logger);
 	}
 
-	public static final Action getToggleLinkAction(final MaMuT mamut, final Logger logger) {
+	public static final Action getToggleLinkAction(final MaMuT mamut,
+			final Logger logger) {
 		return new ToggleLinkAction(mamut, logger);
 	}
-
-
 
 	/*
 	 * INNER CLASSES
 	 */
 
-	private static final class StepWiseTimeBrowsingAction extends AbstractAction
-	{
+	private static final class StepWiseTimeBrowsingAction extends
+			AbstractAction {
 		private static final long serialVersionUID = 1L;
 
 		private final boolean forward;
@@ -92,44 +106,37 @@ public class MamutActions {
 
 		private final MamutViewer viewer;
 
-		public StepWiseTimeBrowsingAction( final MaMuT mamut, final MamutViewer viewer, final boolean forward )
-		{
+		public StepWiseTimeBrowsingAction(final MaMuT mamut,
+				final MamutViewer viewer, final boolean forward) {
 			this.viewer = viewer;
 			this.guiModel = mamut.getGuimodel();
 			this.forward = forward;
 		}
 
 		@Override
-		public void actionPerformed( final ActionEvent e )
-		{
-			final int currentT = viewer.getViewerPanel().getState().getCurrentTimepoint();
-			final int prevStep = ( currentT / guiModel.timeStep ) * guiModel.timeStep;
+		public void actionPerformed(final ActionEvent e) {
+			final int currentT = viewer.getViewerPanel().getState()
+					.getCurrentTimepoint();
+			final int prevStep = (currentT / guiModel.timeStep)
+					* guiModel.timeStep;
 			int tp;
-			if ( forward )
-			{
+			if (forward) {
 				tp = prevStep + guiModel.timeStep;
-			}
-			else
-			{
-				if ( currentT == prevStep )
-				{
+			} else {
+				if (currentT == prevStep) {
 					tp = currentT - guiModel.timeStep;
-				}
-				else
-				{
+				} else {
 					tp = prevStep;
 				}
 			}
 
-			if ( tp < 0 )
-			{
+			if (tp < 0) {
 				tp = 0;
 			}
-			if ( tp > viewer.getViewerPanel().getState().getNumTimePoints() - 1 )
-			{
+			if (tp > viewer.getViewerPanel().getState().getNumTimePoints() - 1) {
 				tp = viewer.getViewerPanel().getState().getNumTimePoints() - 1;
 			}
-			viewer.getViewerPanel().setTimepoint( tp );
+			viewer.getViewerPanel().setTimepoint(tp);
 		}
 	}
 
@@ -150,8 +157,7 @@ public class MamutActions {
 		}
 	}
 
-	private static final class ToggleLinkAction extends AbstractAction
-	{
+	private static final class ToggleLinkAction extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
@@ -159,22 +165,20 @@ public class MamutActions {
 
 		private final Logger logger;
 
-		public ToggleLinkAction( final MaMuT mamut, final Logger logger )
-		{
+		public ToggleLinkAction(final MaMuT mamut, final Logger logger) {
 			this.mamut = mamut;
 			this.logger = logger;
 		}
 
 		@Override
-		public void actionPerformed( final ActionEvent arg0 )
-		{
-			mamut.toggleLink( logger );
+		public void actionPerformed(final ActionEvent arg0) {
+			mamut.toggleLink(logger);
 		}
-
 
 	}
 
-	private static final class ToggleBrightnessDialogAction extends AbstractAction {
+	private static final class ToggleBrightnessDialogAction extends
+			AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 		private final MaMuT mamut;
@@ -190,8 +194,8 @@ public class MamutActions {
 
 	}
 
-	private static final class ToggleManualTransformAction extends AbstractAction
-	{
+	private static final class ToggleManualTransformAction extends
+			AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 
@@ -199,16 +203,15 @@ public class MamutActions {
 
 		private final MamutViewer viewer;
 
-		public ToggleManualTransformAction( final MaMuT mamut, final MamutViewer viewer )
-		{
+		public ToggleManualTransformAction(final MaMuT mamut,
+				final MamutViewer viewer) {
 			this.mamut = mamut;
 			this.viewer = viewer;
 		}
 
 		@Override
-		public void actionPerformed( final ActionEvent e )
-		{
-			mamut.toggleManualTransformation( viewer );
+		public void actionPerformed(final ActionEvent e) {
+			mamut.toggleManualTransformation(viewer);
 		}
 
 	}
@@ -221,18 +224,17 @@ public class MamutActions {
 
 		private HelpDialog helpDialog;
 
-		public ShowHelpAction( final MamutViewer viewer )
-		{
+		public ShowHelpAction(final MamutViewer viewer) {
 			this.viewer = viewer;
 		}
 
 		@Override
 		public void actionPerformed(final ActionEvent e) {
-			if ( null == helpDialog )
-			{
-				helpDialog = new HelpDialog( viewer, MaMuT.class.getResource( "Help.html" ) );
+			if (null == helpDialog) {
+				helpDialog = new HelpDialog(viewer,
+						MaMuT.class.getResource("Help.html"));
 			}
-			helpDialog.setVisible( !helpDialog.isVisible() );
+			helpDialog.setVisible(!helpDialog.isVisible());
 			viewer.getViewerPanel().requestFocus();
 		}
 
@@ -313,7 +315,8 @@ public class MamutActions {
 		private final MaMuT mamut;
 		private final MamutViewer viewer;
 
-		public IncreaseRadiusALotAction(final MaMuT mamut, final MamutViewer viewer) {
+		public IncreaseRadiusALotAction(final MaMuT mamut,
+				final MamutViewer viewer) {
 			super("increase spot radius a lot");
 			this.mamut = mamut;
 			this.viewer = viewer;
@@ -331,7 +334,8 @@ public class MamutActions {
 		private final MaMuT mamut;
 		private final MamutViewer viewer;
 
-		public IncreaseRadiusABitAction(final MaMuT mamut, final MamutViewer viewer) {
+		public IncreaseRadiusABitAction(final MaMuT mamut,
+				final MamutViewer viewer) {
 			super("increase spot radius a bit");
 			this.mamut = mamut;
 			this.viewer = viewer;
@@ -367,7 +371,8 @@ public class MamutActions {
 		private final MaMuT mamut;
 		private final MamutViewer viewer;
 
-		public DecreaseRadiusALotAction(final MaMuT mamut, final MamutViewer viewer) {
+		public DecreaseRadiusALotAction(final MaMuT mamut,
+				final MamutViewer viewer) {
 			super("decrease spot radius a lot");
 			this.mamut = mamut;
 			this.viewer = viewer;
@@ -385,7 +390,8 @@ public class MamutActions {
 		private final MaMuT mamut;
 		private final MamutViewer viewer;
 
-		public DecreaseRadiusABitAction(final MaMuT mamut, final MamutViewer viewer) {
+		public DecreaseRadiusABitAction(final MaMuT mamut,
+				final MamutViewer viewer) {
 			super("decrease spot radius a bit");
 			this.mamut = mamut;
 			this.viewer = viewer;
@@ -394,6 +400,25 @@ public class MamutActions {
 		@Override
 		public void actionPerformed(final ActionEvent arg0) {
 			mamut.increaseSpotRadius(viewer, -0.1d);
+		}
+	}
+
+	private static final class startMaxproj extends AbstractAction {
+
+		private static final long serialVersionUID = 1L;
+		private final MaMuT mamut;
+		private final MamutViewer viewer;
+
+		public startMaxproj(final MaMuT mamut, final MamutViewer viewer) {
+			this.mamut = mamut;
+			this.viewer = viewer;
+
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			// TODO Auto-generated method stub
+
 		}
 	}
 
