@@ -73,6 +73,7 @@ import bdv.tools.brightness.BrightnessDialog;
 import bdv.tools.brightness.ConverterSetup;
 import bdv.tools.brightness.SetupAssignments;
 import bdv.tools.transformation.ManualTransformationEditor;
+import bdv.tools.zdim.ZdimDialog;
 import bdv.viewer.SourceAndConverter;
 import bdv.viewer.state.ViewerState;
 import fiji.plugin.mamut.detection.SourceSemiAutoTracker;
@@ -151,6 +152,8 @@ public class MaMuT implements ModelChangeListener {
 	private SetupAssignments setupAssignments;
 
 	private BrightnessDialog brightnessDialog;
+
+	private ZdimDialog zdimDialog;
 
 	private HelpDialog helpDialog;
 
@@ -336,6 +339,12 @@ public class MaMuT implements ModelChangeListener {
 		 */
 
 		brightnessDialog = new BrightnessDialog(gui, setupAssignments);
+
+		/*
+		 * Z-dimension for maximum projection
+		 */
+
+		zdimDialog = new ZdimDialog(gui, setupAssignments);
 
 		/*
 		 * Help
@@ -614,6 +623,10 @@ public class MaMuT implements ModelChangeListener {
 	@Override
 	public void modelChanged(final ModelChangeEvent event) {
 		refresh();
+	}
+
+	public void toggleZdimDialog() {
+		zdimDialog.setVisible(!zdimDialog.isVisible());
 	}
 
 	public void toggleBrightnessDialog() {

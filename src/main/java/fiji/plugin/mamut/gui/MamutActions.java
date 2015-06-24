@@ -12,11 +12,6 @@ import fiji.plugin.trackmate.Logger;
 
 public class MamutActions {
 
-	public static final Action getStartMaxproj(final MaMuT mamut,
-			final MamutViewer viewer) {
-		return new startMaxproj(mamut, viewer);
-	};
-
 	private MamutActions() {
 	}
 
@@ -90,6 +85,11 @@ public class MamutActions {
 	public static final Action getToggleLinkAction(final MaMuT mamut,
 			final Logger logger) {
 		return new ToggleLinkAction(mamut, logger);
+	}
+
+	public static final Action getToggleZdimDialog(final MaMuT mamut,
+			final MamutViewer viewer) {
+		return new ToggleZDimDialog(mamut, viewer);
 	}
 
 	/*
@@ -403,21 +403,20 @@ public class MamutActions {
 		}
 	}
 
-	private static final class startMaxproj extends AbstractAction {
+	private static final class ToggleZDimDialog extends AbstractAction {
 
 		private static final long serialVersionUID = 1L;
 		private final MaMuT mamut;
 		private final MamutViewer viewer;
 
-		public startMaxproj(final MaMuT mamut, final MamutViewer viewer) {
+		public ToggleZDimDialog(final MaMuT mamut, final MamutViewer viewer) {
 			this.mamut = mamut;
 			this.viewer = viewer;
-
 		}
 
 		@Override
-		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
+		public void actionPerformed(final ActionEvent arg0) {
+			mamut.toggleZdimDialog();
 
 		}
 	}

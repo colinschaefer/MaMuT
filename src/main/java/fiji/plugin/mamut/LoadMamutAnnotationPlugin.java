@@ -13,59 +13,57 @@ import ij.plugin.PlugIn;
 
 import java.io.File;
 
-public class LoadMamutAnnotationPlugin implements PlugIn
-{
+public class LoadMamutAnnotationPlugin implements PlugIn {
 
 	private static File file;
 
 	@Override
-	public void run( final String fileStr )
-	{
+	public void run(final String fileStr) {
 
 		final Logger logger = Logger.IJ_LOGGER;
 
-		if ( null != fileStr && fileStr.length() > 0 )
-		{
+		if (null != fileStr && fileStr.length() > 0) {
 			// Skip dialog
-			file = new File( fileStr );
+			file = new File(fileStr);
 
-			if ( !file.exists() )
-			{
-				IJ.error( MaMuT.PLUGIN_NAME + " v" + MaMuT.PLUGIN_VERSION, "Cannot find the MaMuT file " + file );
+			if (!file.exists()) {
+				IJ.error(MaMuT.PLUGIN_NAME + " v" + MaMuT.PLUGIN_VERSION,
+						"Cannot find the MaMuT file " + file);
 				return;
 			}
-			if ( !file.canRead() )
-			{
-				IJ.error( MaMuT.PLUGIN_NAME + " v" + MaMuT.PLUGIN_VERSION, "Cannot read the MaMuT file " + file );
+			if (!file.canRead()) {
+				IJ.error(MaMuT.PLUGIN_NAME + " v" + MaMuT.PLUGIN_VERSION,
+						"Cannot read the MaMuT file " + file);
 				return;
 			}
 
-			if ( file.isDirectory() )
-			{
-				file = IOUtils.askForFileForLoading( file, "Open a MaMuT xml file", IJ.getInstance(), logger );
-				if ( null == file ) { return; }
+			if (file.isDirectory()) {
+				file = IOUtils.askForFileForLoading(file,
+						"Open a MaMuT xml file", IJ.getInstance(), logger);
+				if (null == file) {
+					return;
+				}
 			}
 
-		}
-		else
-		{
+		} else {
 
-			if ( null == file )
-			{
+			if (null == file) {
 				file = NewMamutAnnotationPlugin.proposeBdvXmlFileToOpen();
 			}
-			file = IOUtils.askForFileForLoading( file, "Open a MaMuT xml file", IJ.getInstance(), logger );
-			if ( null == file ) { return; }
+			file = IOUtils.askForFileForLoading(file, "Open a MaMuT xml file",
+					IJ.getInstance(), logger);
+			if (null == file) {
+				return;
+			}
 		}
 
-		load( file );
+		load(file);
 
 	}
 
-	protected void load( final File mamutFile )
-	{
+	protected void load(final File mamutFile) {
 
-		final MamutXmlReader reader = new MamutXmlReader( mamutFile );
+		final MamutXmlReader reader = new MamutXmlReader(mamutFile);
 
 		/*
 		 * Read model
@@ -78,40 +76,43 @@ public class LoadMamutAnnotationPlugin implements PlugIn
 		 */
 
 		final SourceSettings settings = new SourceSettings();
-		reader.readSettings( settings, null, null, new MamutSpotAnalyzerProvider(), new MamutEdgeAnalyzerProvider(), new MamutTrackAnalyzerProvider() );
+		reader.readSettings(settings, null, null,
+				new MamutSpotAnalyzerProvider(),
+				new MamutEdgeAnalyzerProvider(),
+				new MamutTrackAnalyzerProvider());
 
 		/*
 		 * Read image source location from settings object.
 		 */
 
-		File imageFile = new File( settings.imageFolder, settings.imageFileName );
-		if ( !imageFile.exists() )
-		{
+		File imageFile = new File(settings.imageFolder, settings.imageFileName);
+		if (!imageFile.exists()) {
 			// Then try relative path
-			imageFile = new File( mamutFile.getParent(), settings.imageFileName );
+			imageFile = new File(mamutFile.getParent(), settings.imageFileName);
 		}
 
 		/*
 		 * Launch MaMuT
 		 */
 
-		final MaMuT mamut = new MaMuT( imageFile, model, settings );
+		final MaMuT mamut = new MaMuT(imageFile, model, settings);
 
 		/*
 		 * Update setup assignments
 		 */
 
-		reader.getSetupAssignments( mamut.getSetupAssignments() );
+		reader.getSetupAssignments(mamut.getSetupAssignments());
 
 	}
 
-	public static void main( final String[] args )
-	{
-		ImageJ.main( args );
+	public static void main(final String[] args) {
+		ImageJ.main(args);
 
 		final LoadMamutAnnotationPlugin plugin = new LoadMamutAnnotationPlugin();
-		plugin.run( "" );
-//		plugin.run( "/Users/tinevez/Desktop/iconas/Data/Mamut/parhyale/BDV130418A325_NoTempReg-mamut_JY2.xml" );
+		plugin.run("D:/Users/Colin/h5/mamut-tgmm_cropped_adj_curated_smoothed.xml");
+		// plugin.run(
+		// "/Users/tinevez/Desktop/iconas/Data/Mamut/parhyale/BDV130418A325_NoTempReg-mamut_JY2.xml"
+		// );
 	}
 
 }
