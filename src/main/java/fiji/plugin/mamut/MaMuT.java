@@ -58,6 +58,7 @@ import mpicbg.spim.data.SpimDataException;
 import mpicbg.spim.data.XmlIoSpimData;
 import mpicbg.spim.data.generic.sequence.AbstractSequenceDescription;
 import mpicbg.spim.data.sequence.TimePoint;
+import mpicbg.spim.data.sequence.VoxelDimensions;
 import net.imglib2.RealPoint;
 import net.imglib2.type.numeric.ARGBType;
 
@@ -227,6 +228,8 @@ public class MaMuT implements ModelChangeListener {
 
 	private SpimData spimData;
 
+	private double[] scales;
+
 	public MaMuT(final File imageFile, final Model model,
 			final SourceSettings settings) {
 		this.model = model;
@@ -341,12 +344,6 @@ public class MaMuT implements ModelChangeListener {
 		 */
 
 		brightnessDialog = new BrightnessDialog(gui, setupAssignments);
-
-		/*
-		 * Z-dimension for maximum projection
-		 */
-
-		zdimDialog = new ZdimDialog(gui, setupAssignments);
 
 		/*
 		 * Help
@@ -936,6 +933,14 @@ public class MaMuT implements ModelChangeListener {
 
 		installKeyBindings(viewer);
 		installMouseListeners(viewer);
+
+		scales = viewer.getViewerPanel().getScreenScales();
+
+		VoxelDimensions dimensions = spimData.getSequenceDescription()
+				.getViewSetups().get(0).getVoxelSize();
+
+		zdimDialog = new ZdimDialog(gui, setupAssignments,
+				dimensions.dimension(2), scales[2]);
 
 		viewer.addWindowListener(new DeregisterWindowListener(viewer));
 
