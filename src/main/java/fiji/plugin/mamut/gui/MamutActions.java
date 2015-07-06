@@ -441,6 +441,7 @@ public class MamutActions {
 
 		@Override
 		public void actionPerformed(final ActionEvent arg0) {
+			@SuppressWarnings("unused")
 			MamutVolumeRenderer render = new MamutVolumeRenderer(
 					mamut.getSpimData(), viewer.getViewerPanel(),
 					mamut.getZdimDialog(), mamut.getSetupAssignments(), viewer);

@@ -1,9 +1,6 @@
 package fiji.plugin.mamut.viewer;
 
-import java.awt.AWTException;
-import java.awt.Robot;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
@@ -95,13 +92,6 @@ public class MamutVolumeRenderer {
 		bindings.addActionMap("volume", actionMap);
 		bindings.addInputMap("volume", inputMap);
 
-		Robot robot = null; // TODO: find a better solution for this
-		try {
-			robot = new Robot();
-		} catch (AWTException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		robot.keyPress(KeyEvent.VK_V);
+		actionMap.get(RENDER_CONTINUOUS).actionPerformed(null);
 	}
 }
