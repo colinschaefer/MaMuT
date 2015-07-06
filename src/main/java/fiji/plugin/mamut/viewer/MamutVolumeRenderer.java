@@ -92,6 +92,7 @@ public class MamutVolumeRenderer {
 		bindings.addActionMap("volume", actionMap);
 		bindings.addInputMap("volume", inputMap);
 
+		// initialize the first rendering
 		actionMap.get(RENDER_CONTINUOUS).actionPerformed(null);
 	}
 }
