@@ -1288,6 +1288,10 @@ public class MaMuT implements ModelChangeListener {
 		return zdimDialog;
 	}
 
+	public BrightnessDialog getBrightnessDialog() {
+		return brightnessDialog;
+	}
+
 	/**
 	 * Exposes the TrackMate object that controls this MaMuT session.
 	 *

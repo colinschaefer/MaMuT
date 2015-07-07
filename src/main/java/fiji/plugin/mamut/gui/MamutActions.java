@@ -444,7 +444,8 @@ public class MamutActions {
 			@SuppressWarnings("unused")
 			MamutVolumeRenderer render = new MamutVolumeRenderer(
 					mamut.getSpimData(), viewer.getViewerPanel(),
-					mamut.getZdimDialog(), mamut.getSetupAssignments(), viewer);
+					mamut.getZdimDialog(), mamut.getSetupAssignments(), viewer,
+					mamut.getBrightnessDialog());
 		}
 	}
 
