@@ -433,6 +433,7 @@ public class MamutActions {
 		private static final long serialVersionUID = 1L;
 		private final MaMuT mamut;
 		private final MamutViewer viewer;
+		private boolean started = false;
 
 		public StartMaxProj(final MaMuT mamut, final MamutViewer viewer) {
 			this.mamut = mamut;
@@ -441,11 +442,14 @@ public class MamutActions {
 
 		@Override
 		public void actionPerformed(final ActionEvent arg0) {
-			@SuppressWarnings("unused")
-			MamutVolumeRenderer render = new MamutVolumeRenderer(
-					mamut.getSpimData(), viewer.getViewerPanel(),
-					mamut.getZdimDialog(), mamut.getSetupAssignments(),
-					viewer.getKeybindings(), mamut.getBrightnessDialog());
+			if (!started) {
+				@SuppressWarnings("unused")
+				MamutVolumeRenderer render = new MamutVolumeRenderer(
+						mamut.getSpimData(), viewer.getViewerPanel(),
+						mamut.getZdimDialog(), mamut.getSetupAssignments(),
+						viewer.getKeybindings(), mamut.getBrightnessDialog());
+				started = true;
+			}
 		}
 	}
 

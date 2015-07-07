@@ -20,8 +20,6 @@ public class MamutVolumeRenderer extends VolumeRenderer {
 				brightnessDialog);
 
 		// initial rendering with setting of the right parameters
-		viewer.inverseMaxproj();
-		viewer.showMessage("maximum projection ON");
-		super.render();
+		super.initialRender();
 	}
 }
