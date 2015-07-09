@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.util.List;
 
 import net.imglib2.realtransform.AffineTransform3D;
+import net.imglib2.ui.TransformEventHandler;
 import bdv.img.cache.Cache;
 import bdv.viewer.SourceAndConverter;
 import bdv.viewer.ViewerPanel;
@@ -66,10 +67,27 @@ public class MamutViewerPanel extends ViewerPanel {
 		final double dz = -(t.get(2, 0) * spotCoords[0] + t.get(2, 1)
 				* spotCoords[1] + t.get(2, 2) * spotCoords[2]);
 
-		// But use an animator to do this smoothly.
-		final double[] target = new double[] { dx, dy, dz };
-		currentAnimator = new TranslationAnimator(t, target, 300);
-		currentAnimator.setTime(System.currentTimeMillis());
-		requestRepaint();
+		if (!getMaxproj()) {
+			// But use an animator to do this smoothly.
+			final double[] target = new double[] { dx, dy, dz };
+			currentAnimator = new TranslationAnimator(t, target, 300);
+			currentAnimator.setTime(System.currentTimeMillis());
+			requestRepaint();
+		} else {
+			final double[] target = new double[] { dx, dy, dz };
+			currentAnimator = new TranslationAnimator(t, target, 300);
+			currentAnimator.setTime(System.currentTimeMillis());
+
+			synchronized (this) {
+				final TransformEventHandler<AffineTransform3D> handler = display
+						.getTransformEventHandler();
+				final AffineTransform3D transform = currentAnimator
+						.getCurrent(System.currentTimeMillis() + 1000);
+				handler.setTransform(transform);
+				transformChanged(transform);
+				if (currentAnimator.isComplete())
+					currentAnimator = null;
+			}
+		}
 	}
 }
