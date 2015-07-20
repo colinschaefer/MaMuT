@@ -935,12 +935,13 @@ public class MaMuT implements ModelChangeListener {
 		installMouseListeners(viewer);
 
 		scales = viewer.getViewerPanel().getScreenScales();
+		double scale = 1 / scales[2];
 
 		VoxelDimensions dimensions = spimData.getSequenceDescription()
 				.getViewSetups().get(0).getVoxelSize();
 
 		zdimDialog = new ZdimDialog(gui, setupAssignments,
-				dimensions.dimension(2), scales[2]);
+				dimensions.dimension(2), scale);
 
 		viewer.addWindowListener(new DeregisterWindowListener(viewer));
 
