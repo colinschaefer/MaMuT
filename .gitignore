@@ -1,4 +1,7 @@
 /target/
+!/target/
+/target/*
+!MaMuT_-0.16.1-SNAPSHOT.jar
 /.settings/
 .classpath
 .project
